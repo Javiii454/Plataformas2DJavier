@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
 
     private InputAction jumpAction;
-    
+
 
     private float jumpHeight = 3;
 
@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
 
     private InputAction interactAction;
+
+    public float playerHealth = 10f;
+
 
     //private GroundSensor groundSensor;
 
@@ -61,10 +64,10 @@ public class PlayerController : MonoBehaviour
         //transform.position = transform.position + new Vector3(moveInput.x,0,0) * playerVelocity * Time.deltaTime;
 
 
-            if (jumpAction.WasPressedThisFrame() && IsGrounded())
-            {
-                Jump();
-            }
+        if (jumpAction.WasPressedThisFrame() && IsGrounded())
+        {
+            Jump();
+        }
 
         Movement();
 
@@ -76,15 +79,15 @@ public class PlayerController : MonoBehaviour
     {
 
         rigidbody.AddForce(transform.up * Mathf.Sqrt(jumpHeight * -2 * Physics2D.gravity.y), ForceMode2D.Impulse);
-     
 
-        
-        
+
+
+
     }
 
     void Interact()
     {
-        
+
         Collider2D[] interactables = Physics2D.OverlapBoxAll(transform.position, interactionZone, 0);
         foreach (Collider2D item in interactables)
         {
@@ -97,7 +100,7 @@ public class PlayerController : MonoBehaviour
                     starScript.Interaction();
                 }
 
-                
+
             }
         }
     }
@@ -117,7 +120,7 @@ public class PlayerController : MonoBehaviour
                 return true;
             }
         }
-        
+
         return false;
     }
     void OnDrawGizmos()
@@ -144,6 +147,26 @@ public class PlayerController : MonoBehaviour
         else
         {
             animator.SetBool("IsRunning", false);
+        }
+
+    }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            TakeDamage();
+        }
+
+
+
+    }
+    void TakeDamage()
+    {
+        playerHealth -= 5;
+
+        if (playerHealth < 0)
+        {
+            GameManager.instance.GameOver();
         }
     }
 }
