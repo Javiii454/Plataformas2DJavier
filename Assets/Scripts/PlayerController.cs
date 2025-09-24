@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
 
     private InputAction jumpAction;
+    
 
     private float jumpHeight = 3;
 
@@ -51,7 +52,7 @@ public class PlayerController : MonoBehaviour
         moveInput = moveAction.ReadValue<Vector2>();
 
 
-        if (interactAction.WasPressedThisFrame())
+        if (interactAction.WasPerformedThisFrame())
         {
             Interact();
         }
@@ -89,7 +90,14 @@ public class PlayerController : MonoBehaviour
         {
             if (item.gameObject.tag == "Star")
             {
-                Debug.Log("Desimaru muerete");
+                Star starScript = item.gameObject.GetComponent<Star>();
+
+                if (starScript != null)
+                {
+                    starScript.Interaction();
+                }
+
+                
             }
         }
     }

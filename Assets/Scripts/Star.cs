@@ -2,15 +2,19 @@ using UnityEngine;
 
 public class Star : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private AudioClip starSFX;
+    //private GameManager gameManager;
 
-    // Update is called once per frame
-    void Update()
+    void Awake()
     {
+        //gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
+    public void Interaction()
+    {
+        //gameManager.AddStar();
+        GameManager.instance.AddStar();
+        AudioManager.instance.ReproducedSound(starSFX);
+        Destroy(gameObject);
         
     }
 }

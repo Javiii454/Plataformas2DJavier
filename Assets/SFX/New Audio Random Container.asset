@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1233149941 &-6094893281822822657
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: baitola-hollow-knight-silksong_{-6094893281822822657}
+  m_AudioClip: {fileID: 8300000, guid: 3091f6144dac2114f972ccadf3de47fe, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &1808182745835676190
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: hollow-knight-hornet-voice-11_{1808182745835676190}
+  m_AudioClip: {fileID: 8300000, guid: d0b472a3157082048b96bbb4f51576c3, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &3205858560996228400
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ping_missing_{3205858560996228400}
+  m_AudioClip: {fileID: 8300000, guid: 9fc56aaddd092fa45a3dbe0e68d441c0, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &3270531572928506134
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: rammus-ok_{3270531572928506134}
+  m_AudioClip: {fileID: 8300000, guid: de2756bfcc9fceb4e9261eae991a042f, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1307931743 &6418180475301049370
+AudioRandomContainer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: New Audio Random Container
+  m_Volume: 0
+  m_Pitch: 0
+  m_AutomaticTriggerTime: 0
+  m_LoopCount: 1
+  m_VolumeRandomizationRange: {x: -17.02128, y: 27.234049}
+  m_PitchRandomizationRange: {x: -306.38303, y: 919.1489}
+  m_AutomaticTriggerTimeRandomizationRange: {x: 0, y: 0}
+  m_LoopCountRandomizationRange: {x: 0, y: 0}
+  m_Elements:
+  - {fileID: -6094893281822822657}
+  - {fileID: 1808182745835676190}
+  - {fileID: 3205858560996228400}
+  - {fileID: 3270531572928506134}
+  m_AvoidRepeatingLast: 0
+  m_PlaybackMode: 2
+  m_TriggerMode: 1
+  m_AutomaticTriggerMode: 1
+  m_LoopMode: 2
+  m_VolumeRandomizationEnabled: 1
+  m_PitchRandomizationEnabled: 1
+  m_AutomaticTriggerTimeRandomizationEnabled: 0
+  m_LoopCountRandomizationEnabled: 0
