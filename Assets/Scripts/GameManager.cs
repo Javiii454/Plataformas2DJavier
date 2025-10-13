@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
     private int stars = 0;
+    private int coins = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -23,6 +24,13 @@ public class GameManager : MonoBehaviour
         stars++;
         Debug.Log("Estrellas recogidas" + stars);
     }
+     public void AddCoin()
+    {
+        coins++;
+        Debug.Log("Estrellas recogidas" + coins);
+    }
+
+
 
     void Start()
     {
@@ -33,4 +41,5 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(2);
     }
+
 }

@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class PlayerController : MonoBehaviour
     private InputAction interactAction;
 
     public float playerHealth = 10f;
+
+    [SerializeField] private AudioClip jumpSFX;
 
 
     //private GroundSensor groundSensor;
@@ -79,7 +82,7 @@ public class PlayerController : MonoBehaviour
     {
 
         rigidbody.AddForce(transform.up * Mathf.Sqrt(jumpHeight * -2 * Physics2D.gravity.y), ForceMode2D.Impulse);
-
+        AudioManager.instance.ReproducedSound(jumpSFX);
 
 
 
@@ -103,6 +106,7 @@ public class PlayerController : MonoBehaviour
 
             }
         }
+
     }
 
     void FixedUpdate()
@@ -167,6 +171,13 @@ public class PlayerController : MonoBehaviour
         if (playerHealth < 0)
         {
             GameManager.instance.GameOver();
+        }
+    }
+    void OnTriggerEnter2D(Collider2D collision) 
+    {
+        if(collision.gameObject.layer == 7)
+        {
+            SceneManager.LoadScene(2);
         }
     }
 }
