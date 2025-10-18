@@ -9,4 +9,9 @@ public class GameOverManager : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    public void Home()
+    {
+        SceneManager.LoadScene(0);
+    }
+
 }

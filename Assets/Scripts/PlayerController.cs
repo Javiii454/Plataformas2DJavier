@@ -1,7 +1,10 @@
-using Unity.VisualScripting;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
+using System.Xml;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
@@ -21,10 +24,27 @@ public class PlayerController : MonoBehaviour
 
     private InputAction interactAction;
 
-    public float playerHealth = 10f;
+    public float playerHealth;
+
+    public float maxHealth = 15;
+
+    public float attackRange = 1;
+
+    public Transform attackPosition;
+
+    public float attackDamage = 10;
+
+    private bool isRunning = false;
 
     [SerializeField] private AudioClip jumpSFX;
 
+    [SerializeField] private LayerMask enemyLayer;
+    
+    private bool canAttack;
+
+    private float coldown = 0.5f;
+
+    [SerializeField] private AudioClip runSFX;
 
     //private GroundSensor groundSensor;
 
@@ -76,6 +96,23 @@ public class PlayerController : MonoBehaviour
 
         animator.SetBool("IsJumping", !IsGrounded());
 
+        if(attackAction.WasPressedThisFrame() && !isRunning)
+        {
+            if(canAttack)
+            {
+                animator.SetTrigger("Attack");
+                StartCoroutine(AttackColdown());
+            }
+        }
+        else if (attackAction.WasPressedThisFrame() && isRunning)
+        {
+            if(canAttack)
+            {
+                animator.SetTrigger("MovingAttack");
+                StartCoroutine(AttackColdown());
+            }
+    
+        }
     }
 
     void Jump()
@@ -83,6 +120,7 @@ public class PlayerController : MonoBehaviour
 
         rigidbody.AddForce(transform.up * Mathf.Sqrt(jumpHeight * -2 * Physics2D.gravity.y), ForceMode2D.Impulse);
         AudioManager.instance.ReproducedSound(jumpSFX);
+        
 
 
 
@@ -134,6 +172,11 @@ public class PlayerController : MonoBehaviour
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(transform.position, interactionZone);
+        
+        Gizmos.color = Color.black;
+        Gizmos.DrawWireSphere(attackPosition.position, attackRange);
+        
+
     }
 
     void Movement()
@@ -142,11 +185,13 @@ public class PlayerController : MonoBehaviour
         {
             transform.rotation = Quaternion.Euler(0, 180, 0);
             animator.SetBool("IsRunning", true);
+            AudioManager.instance.ReproducedSound(runSFX);
         }
         else if (moveInput.x > 0)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
             animator.SetBool("IsRunning", true);
+            AudioManager.instance.ReproducedSound(runSFX);
         }
         else
         {
@@ -158,15 +203,17 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            TakeDamage();
+            TakeDamage(5);
         }
 
 
 
     }
-    void TakeDamage()
+    void TakeDamage(float damage)
     {
-        playerHealth -= 5;
+        playerHealth -= damage;
+
+       GameManager.instance.HealthBar(playerHealth, maxHealth);
 
         if (playerHealth < 0)
         {
@@ -179,5 +226,24 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene(2);
         }
+    }
+    void Attack()
+    {
+        Collider2D[] Enemy = Physics2D.OverlapCircleAll(attackPosition.position, attackRange, enemyLayer);
+        foreach (Collider2D item in Enemy)
+        {
+            if(item.gameObject.layer == 6)
+            {
+                EnemyController enemyScipt = item.gameObject.GetComponent<EnemyController>();
+                enemyScipt.TakeDamage(attackDamage);
+            }
+        }
+    }
+
+    IEnumerator AttackColdown()
+    {
+        canAttack = false;
+        yield return new WaitForSeconds(coldown);
+        canAttack = true;
     }
 }

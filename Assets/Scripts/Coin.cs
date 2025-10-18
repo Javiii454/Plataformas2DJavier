@@ -13,10 +13,10 @@ public class Coin : MonoBehaviour
     // Update is called once per frame
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag == "Player")
+        if(collision.gameObject.tag == "Player")
         {
-            GameManager.instance.AddStar();
-            AudioManager.instance.ReproducedSound(starSFX);
+            GameManager.instance.AddCoin();
+            AudioManager.instance.ReproducedSound(coinSFX);
             Destroy(gameObject);
         }
     }

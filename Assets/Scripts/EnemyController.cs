@@ -3,7 +3,6 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
 
-    public int enemyHealth = 5;
 
     public float enemySpeed = 4.5f;
 
@@ -12,11 +11,16 @@ public class EnemyController : MonoBehaviour
     private Rigidbody2D rigidbody;
 
     private Animator animator;
+
+    [SerializeField] private float enemyHealth = 20;
+
+    private PlayerController playerController;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -57,5 +61,15 @@ public class EnemyController : MonoBehaviour
         
 
        
+    }
+
+    public void TakeDamage(float damage)
+    {
+        enemyHealth -= damage;
+        if(enemyHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
+
     }
 }
